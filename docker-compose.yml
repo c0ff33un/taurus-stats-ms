@@ -1,0 +1,33 @@
+version: '3'
+services:
+  taurus-stats-ms:
+    build: .
+    # command: sh -c "python manage.py db init && python manage.py db migrate && python manage.py db upgrade"
+    ports:
+      - "6000:6000"
+    volumes:
+      - .:/code
+    environment:
+      DB_URL: taurus-stats-db
+      MYSQL_USER: 'taurus'
+      MYSQL_PASSWORD: 't4urus'
+    depends_on:
+      - taurus-stats-db
+    networks:
+      - taurus-network
+
+  taurus-stats-db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'taurus-stats'
+      MYSQL_USER: 'taurus'
+      MYSQL_PASSWORD: 't4urus'
+      MYSQL_ROOT_PASSWORD: 'cX8Lpfft'
+    ports:
+      - "3306:3306"
+    networks:
+      - taurus-network
+
+networks:
+  taurus-network:
+    external: true

@@ -1,0 +1,7 @@
+Flask==1.1.1
+Flask-RESTful==0.3.7
+flask-sqlalchemy
+flask-migrate
+flask-script
+mysqlclient
+mysql-connector
