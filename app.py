@@ -1,6 +1,9 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
 import json
+import os
+from src.update_data.user import update_user
+from src.provide_data.user import get_user
 
 app = Flask(__name__)
 api = Api(app)
@@ -20,46 +23,34 @@ class User(Resource):
     except:
       return {"error": "boolean 'won' not provided"}, 400
 
-    response = "Not implemented yet"
-
-    return response, 201
+    success = update_user(userId, won)
     
-
-# class queue(Resource):
-#   def post(self):
-#     """ If userid is not in POST form then return 400 Bad Request """
-#     # if hasattr(request,'userid'):
-#     #   return {'error': 'userid not provided'}, 400
-#     try:
-#       userid = request.get_json()["userid"]
-#     except: 
-#       return {"error": "userid not provided"}, 400 
-#     """ Enqueue the user and dequeue with matcher function """
-#     job = q.enqueue_call(func=matcher,
-#               args=(userid,),
-#               timeout=30,
-#               job_id=str(userid))
-#     return {"userid": job.id, "enqueued_at": str(job.enqueued_at)}, 200
-
-# class create(Resource):
-#   def post(self):
-#     try:
-#       userid = request.get_json()["userid"]
-#     except: 
-#       return {"error": "userid not provided"}, 400 
+    if success:
+      return {"success": "user updated successfully"}, 201
+    else:
+      return {"error": "can't update user"}, 500
+  
+  def get(self):
+    try:
+      userId = request.args.get('userId')
+    except:
+      return {"error": "'userId' not provided"}, 400
     
-#     x = {
-#       "id": userid,
-#       "score": 100
-#     }
-
-#     json_res = json.dumps(x)
-
-#     r.set(f"user:{userid}", str(json_res))
-#     r.sadd("users", f"user:{userid}")
-#     return {"message": f"user {userid} created"}, 201
+    played, won, lost = get_user(userId)
+    return {"played": played, "won": won, "lost": lost}, 200
 
 api.add_resource(User, '/user')
 
+def make_migration():
+  if not os.path.exists("/app/migrations"):
+    os.system('sh -c "python manage.py db init"')
+  
+  success = False
+  while not success:
+    response = os.system('sh -c "python manage.py db migrate && python manage.py db upgrade"')
+    success = True if response == 0 else False
+    if success: break
+
 if __name__ == "__main__":
+    make_migration()
     app.run(debug=True, host= '0.0.0.0', port=6000)

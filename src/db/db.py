@@ -1,12 +1,9 @@
 import mysql.connector
-from os import environ
-
-user_db = environ.get("MYSQL_USER")
-pass_db = environ.get("MYSQL_PASSWORD")
-url_db = environ.get("DB_URL")
+import os
 
 db = mysql.connector.connect(
-  host=url_db,
-  user=user_db,
-  passwd=pass_db
+  host=os.environ['DB_URL'],
+  user=os.environ['MYSQL_USER'],
+  passwd=os.environ['MYSQL_PASSWORD'],
+  database=os.environ['MYSQL_DATABASE'],
 )
