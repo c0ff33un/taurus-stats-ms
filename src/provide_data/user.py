@@ -4,9 +4,7 @@ from pandas import DataFrame
 cursor = db.cursor()
 
 def get_user(userId):
-    query = 'SELECT * FROM user where userId = %d'
-    value = (userId, )
-    cursor.execute(query, value)
+    cursor.execute('SELECT * FROM user where userId = %s', (userId,))
     df = DataFrame(cursor.fetchall())
     try:
         df.columns = ["userId", "played", "won", "lost"]
@@ -15,4 +13,4 @@ def get_user(userId):
     except:
         played, num_won, num_lost = (0, 0, 0)
     
-    return played, num_won, num_lost
+    return int(played), int(num_won), int(num_lost)

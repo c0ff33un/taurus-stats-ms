@@ -2,7 +2,7 @@ from flask import Flask, request
 from flask_restful import Resource, Api
 import json
 import os
-from src.update_data.user import update_user
+from src.update_data.user import update_list_users
 from src.provide_data.user import get_user
 
 app = Flask(__name__)
@@ -14,16 +14,16 @@ class User(Resource):
   """
   def post(self):
     try:
-      userId = request.get_json()["userId"]
+      users = request.get_json()["users"]
     except:
-      return {"error": "'userId' not provided"}, 400
+      return {"error": "users not provided"}, 400
     
     try:
-      won = request.get_json()["won"]
+      winner = request.get_json()["winner"]
     except:
-      return {"error": "boolean 'won' not provided"}, 400
+      return {"error": "winner not provided"}, 400
 
-    success = update_user(userId, won)
+    success = update_list_users(users, winner)
     
     if success:
       return {"success": "user updated successfully"}, 201
