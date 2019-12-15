@@ -4,8 +4,9 @@ from pandas import DataFrame
 cursor = db.cursor()
 
 def get_user(userId):
-    query = 'SELECT * FROM user where userId = {}'.format(userId)
-    cursor.execute(query)
+    query = 'SELECT * FROM user where userId = %d'
+    value = (userId, )
+    cursor.execute(query, value)
     df = DataFrame(cursor.fetchall())
     try:
         df.columns = ["userId", "played", "won", "lost"]
