@@ -41,8 +41,8 @@ class User(Resource):
     except:
       return {"error": "'userId' not provided"}, 400
     
-    played, won, lost = get_user(userId)
-    return {"played": played, "won": won, "lost": lost}, 200
+    played, won, lost, avgTime, bestTime = get_user(userId)
+    return {"played": played, "won": won, "lost": lost, "avgTime": avgTime, "bestTime": bestTime}, 200
 
 api.add_resource(User, '/user')
 
