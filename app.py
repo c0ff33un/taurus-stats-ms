@@ -22,8 +22,13 @@ class User(Resource):
       winner = request.get_json()["winner"]
     except:
       return {"error": "winner not provided"}, 400
+    
+    try:
+      time = request.get_json()["time"]
+    except:
+      return {"error": "time not provided"}, 400
 
-    success = update_list_users(users, winner)
+    success = update_list_users(users, winner, time)
     
     if success:
       return {"success": "user updated successfully"}, 201

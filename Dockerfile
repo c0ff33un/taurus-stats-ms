@@ -1,5 +1,5 @@
 # Dockerfile - this is a comment. Delete me if you want.
-FROM python:3.6-slim-stretch
+FROM python:3.6-slim
 COPY requirements.txt /app/requirements.txt
 WORKDIR /app
 RUN apt-get update

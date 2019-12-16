@@ -7,3 +7,4 @@ mysql==0.0.2
 mysql-connector-python==8.0.17
 mysqlclient==1.4.2.post1
 pandas
+pymongo

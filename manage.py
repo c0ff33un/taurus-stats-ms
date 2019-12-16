@@ -26,6 +26,9 @@ class User(db.Model):
     played = db.Column(db.Integer)
     won = db.Column(db.Integer)
     lost = db.Column(db.Integer)
+    totalTime = db.Column(db.Integer) # Total time spend resolving all mazes
+    avgTime = db.Column(db.Integer)
+    bestTime = db.Column(db.Integer)
 
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
