@@ -4,6 +4,7 @@ import json
 import os
 from src.update_data.user import update_list_users
 from src.provide_data.user import get_user
+from src.provide_data.rank import global_ranker
 
 app = Flask(__name__)
 api = Api(app)
@@ -44,7 +45,13 @@ class User(Resource):
     played, won, lost, avgTime, bestTime = get_user(userId)
     return {"played": played, "won": won, "lost": lost, "avgTime": avgTime, "bestTime": bestTime}, 200
 
+class Ranking(Resource):
+  def get(self):
+    json = global_ranker()
+    return json, 200
+
 api.add_resource(User, '/user')
+api.add_resource(Ranking, '/ranking')
 
 def make_migration():
   if not os.path.exists("/app/migrations"):
