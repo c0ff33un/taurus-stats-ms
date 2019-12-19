@@ -5,18 +5,18 @@ from pandas import DataFrame
 def get_user(userId):
     db = get_conn_db()
     cursor = db.cursor()
-    cursor.execute('SELECT * FROM user where userId = %s', (userId,))
+    cursor.execute("SELECT * FROM user where userId = %s;", (userId,))
     df = DataFrame(cursor.fetchall())
-    try:
-        df.columns = ["userId", "played", "won", "lost", "avgTime", "bestTime", "totalTime"]
+    # try:
+    df.columns = ["userId", "played", "won", "lost", "avgTime", "bestTime", "totalTime"]
 
-        played = df["played"][0]
-        num_won = df["won"][0]
-        num_lost = df["lost"][0]
-        avgTime = df["avgTime"][0]
-        bestTime = df["bestTime"][0]
-    except:
-        played, num_won, num_lost, avgTime, bestTime = (0, 0, 0, 0, 9999999)
+    played = df["played"][0]
+    num_won = df["won"][0]
+    num_lost = df["lost"][0]
+    avgTime = df["avgTime"][0]
+    bestTime = df["bestTime"][0]
+    # except:
+    #     played, num_won, num_lost, avgTime, bestTime = (0, 0, 0, 0, 9999999)
 
     if bestTime == 9999999:
         bestTime = 0

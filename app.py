@@ -60,7 +60,7 @@ class Ranking(Resource):
     try:
       userId = request.get_json()["userId"]
     except:
-      return {"error": "users not provided"}, 400
+      return {"error": "userId not provided"}, 400
     
     json = user_rank(userId)
     if not json:
@@ -68,7 +68,7 @@ class Ranking(Resource):
     return json, 200
     
 
-api.add_resource(User, '/user')
+api.add_resource(User, '/match')
 api.add_resource(Ranking, '/ranking')
 
 def make_migration():
