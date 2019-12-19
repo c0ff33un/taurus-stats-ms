@@ -22,7 +22,7 @@ manager = Manager(app)
 manager.add_command('db', MigrateCommand)
 
 class User(db.Model):
-    userId = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    userId = db.Column(db.String(128), primary_key=True, autoincrement=False)
     played = db.Column(db.Integer)
     won = db.Column(db.Integer)
     lost = db.Column(db.Integer)

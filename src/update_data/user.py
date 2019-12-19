@@ -1,9 +1,10 @@
-from src.db.db import db
+from src.db.db import get_conn_db
 from pandas import DataFrame
 
-cursor = db.cursor()
 
 def update_user(userId, won, time):
+    db = get_conn_db()
+    cursor = db.cursor()
     try:
         query = 'SELECT userId, played, won, lost, avgTime, bestTime, totalTime FROM user where userId = %s'
         value = (userId, )
@@ -33,7 +34,7 @@ def update_user(userId, won, time):
         else:
             num_lost += 1
         
-        sql = "INSERT INTO user (userId, played, won, lost, avgTime, bestTime, totalTime) VALUES ({}, {}, {}, {}, {}, {}, {}) ON DUPLICATE KEY UPDATE played={}, won={}, lost={}, avgTime = {}, bestTime = {}, totalTime = {}".format(userId, played, num_won, num_lost, avgTime, bestTime, totalTime, played, num_won, num_lost, avgTime, bestTime, totalTime)
+        sql = "INSERT INTO user (userId, played, won, lost, avgTime, bestTime, totalTime) VALUES ('{}', {}, {}, {}, {}, {}, {}) ON DUPLICATE KEY UPDATE played={}, won={}, lost={}, avgTime = {}, bestTime = {}, totalTime = {}".format(userId, played, num_won, num_lost, avgTime, bestTime, totalTime, played, num_won, num_lost, avgTime, bestTime, totalTime)
         cursor.execute(sql)
         db.commit()
         return True

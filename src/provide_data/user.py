@@ -1,9 +1,10 @@
-from src.db.db import db
+from src.db.db import get_conn_db
 from pandas import DataFrame
 
-cursor = db.cursor()
 
 def get_user(userId):
+    db = get_conn_db()
+    cursor = db.cursor()
     cursor.execute('SELECT * FROM user where userId = %s', (userId,))
     df = DataFrame(cursor.fetchall())
     try:
