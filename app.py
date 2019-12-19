@@ -53,7 +53,7 @@ class Ranking(Resource):
   def get(self):
     json = global_ranker()
     if not json:
-      return {"error": "No data"}, 404
+      return {"error": "No data"}, 200
     return json, 200
 
   def post(self):
@@ -64,7 +64,7 @@ class Ranking(Resource):
     
     json = user_rank(userId)
     if not json:
-      return {"error": "No data"}, 404
+      return {"error": "No data"}, 200
     return json, 200
     
 
@@ -83,4 +83,4 @@ def make_migration():
 
 if __name__ == "__main__":
     make_migration()
-    app.run(debug=True, host= '0.0.0.0', port=6000)
+    app.run(debug=True, host= '0.0.0.0', port=5001)

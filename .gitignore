@@ -1,0 +1,8 @@
+/flask
+.vscode
+*/_pycache_/*
+test.sh
+migrations
+.dockerignore
+
+__pycache__/
